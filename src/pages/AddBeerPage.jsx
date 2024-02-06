@@ -1,4 +1,7 @@
+import axios from "axios";
 import { useState } from "react";
+
+const API_URL = "https://ih-beers-api2.herokuapp.com/beers/new";
 
 function AddBeerPage() {
   // State variables to store the values of the form inputs. You can leave these as they are.
@@ -21,20 +24,57 @@ function AddBeerPage() {
   const handleAttenuationLevel = (e) => setAttenuationLevel(e.target.value);
   const handleContributedBy = (e) => setContributedBy(e.target.value);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
+    const requestBody = {
+      name,
+      tagline,
+      description,
+      image_url: imageUrl,
+      first_brewed: firstBrewed,
+      brewers_tips: brewersTips,
+      attenuation_level: attenuationLevel,
+      contributed_by: contributedBy,
+    };
+
+    // {
+    //   "image_url": "https://images.punkapi.com/v2/keg.png",
+    //   "name": "zzzzzzzzzzzzzzzzzz",
+    //   "tagline": "A Real Bitter Experience.",
+    //   "first_brewed": "09/2007",
+    //   "description": "A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.",
+    //   "attenuation_level": 75,
+    //   "brewers_tips": "The earthy and floral aromas from the hops can be overpowering. Drop a little Cascade in at the end of the boil to lift the profile with a bit of citrus.",
+    //   "contributed_by": "Sam Mason <samjbmason>"
+    // }
+
+    axios
+      .post(`${API_URL}`, requestBody)
+      .then((resp) => {
+        console.log(resp);
+        setName("");
+        setTagline("");
+        setDescription("");
+        setImageUrl("");
+        setFirstBrewed("");
+        setBrewersTips("");
+        setAttenuationLevel(0);
+        setContributedBy("");
+      })
+      .catch((error) => console.log(error));
+  };
 
   // TASK:
   // 1. Create a function to handle the form submission and send the form data to the Beers API to create a new beer.
   // 2. Use axios to make a POST request to the Beers API.
   // 3. Once the beer is created, navigate the user to the page showing the list of all beers.
 
-
-
   // Structure and the content of the page showing the form for adding a new beer. You can leave this as it is.
   return (
     <>
       <div className="d-inline-flex flex-column w-100 p-4">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Name</label>
           <input
             className="form-control mb-4"
