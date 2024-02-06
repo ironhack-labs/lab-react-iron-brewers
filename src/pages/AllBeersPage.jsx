@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "../components/Search";
 import beersJSON from "./../assets/beers.json";
-
+import axios from "axios";
+import { API_URL } from '../common/constants'
 
 
 function AllBeersPage() {
@@ -16,12 +17,21 @@ function AllBeersPage() {
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
 
+  useEffect(() => {
+    axios.get(`${API_URL}`)
+      .then(res => setBeers(res.data))
+  }, [])
 
+
+  const searchHandler = (e) => {
+    axios.get(`${API_URL}/search?q=${e.target.value}`)
+      .then(res => setBeers(res.data))
+  }
 
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
     <>
-      <Search />
+      <Search searchHandler={searchHandler} />
 
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
         {beers &&
