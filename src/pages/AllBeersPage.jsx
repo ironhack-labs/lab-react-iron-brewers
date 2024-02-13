@@ -9,6 +9,7 @@ const API_BASE_URL = 'https://ih-beers-api2.herokuapp.com/beers'
 const AllBeersPage = () => {
 
   const [beers, setBeers] = useState();
+  const [query, setQuery] = useState("")
 
   useEffect(() => loadAllBeers(), [])
 
@@ -20,11 +21,22 @@ const AllBeersPage = () => {
       .catch(err => console.log(err))
   }
 
+  useEffect(() => fetchSearchedBeers(), [query])
 
+  const fetchSearchedBeers = () => {
+
+    axios
+      .get(`${API_BASE_URL}/search?q=${query}`)
+      .then(({ data }) => setBeers(data))
+  }
+
+  const searchHandler = (string) => {
+    setQuery(string)
+  }
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
     <>
-      <Search />
+      <Search searchHandler={searchHandler} />
 
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
         {beers &&

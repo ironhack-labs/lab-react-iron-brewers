@@ -1,34 +1,14 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-const API_BASE_URL = 'https://ih-beers-api2.herokuapp.com/beers'
+const Search = ({ searchHandler }) => {
 
+  const [string, setString] = useState('')
 
-const Search = () => {
-
-  const [searchResults, setSearchResults] = useState([])
-  const [query, setQuery] = useState('')
-
-  useEffect(() => {
-    if (query.trim() !== '') {
-      getSearchData();
-    } else {
-      setSearchResults([]);
-    }
-  }, [query]);
-
-  const getSearchData = () => {
-
-    axios
-      .get(`${API_BASE_URL}/search?q=${query}`)
-      .then(({ data }) => setSearchResults(data))
-      .catch(err => console.log(err))
+  const handleSearch = (e) => {
+    setString(e.target.value)
+    searchHandler(e.target.value)
   }
 
-  const handleInputChange = e => {
-    const { value } = e.target
-    setQuery(value)
-  }
 
   return (
     <div className="d-inline-flex justify-content-center align-items-center w-100 p-4">
@@ -41,15 +21,10 @@ const Search = () => {
         <input
           type="text"
           className="form-control search-bar"
-          value={query}
-          onChange={handleInputChange}
+          value={string}
+          onChange={handleSearch}
         />
       </div>
-      <ul>
-        {searchResults.map((beer) => (
-          <li key={beer.id}>{beer.name}</li>
-        ))}
-      </ul>
     </div>
   );
 }
