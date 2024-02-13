@@ -37,7 +37,7 @@ e.preventDefault();
 const newBeer={
 name:name,
 tagline:tagline,
-decscription:description,
+description:description,
 image_url:imageUrl,
 first_brewed:firstBrewed,
 brewers_tips:brewersTips,
