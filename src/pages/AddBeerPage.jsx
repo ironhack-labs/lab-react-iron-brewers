@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AddBeerPage() {
   // State variables to store the values of the form inputs. You can leave these as they are.
@@ -42,12 +44,15 @@ function AddBeerPage() {
       const response = await axios.post("https://ih-beers-api2.herokuapp.com/beers/new", newBeer);
       
       console.log("New beer created:", response.data);
+// 3. Once the beer is created, navigate the user to the page showing the list of all beers.
+      navigate("/beers");
+
     } catch (error) {
       console.error("Error creating new beer:", error);
     }
   };
      
-  // 3. Once the beer is created, navigate the user to the page showing the list of all beers.
+  
 
 
 
