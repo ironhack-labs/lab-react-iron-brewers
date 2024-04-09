@@ -29,10 +29,14 @@ function AllBeersPage() {
     getAllBeers();
   }, []);
 
+  const handleSearch = (searchResults) => {
+    setBeers(searchResults);
+  };
+
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
     <>
-      <Search />
+      <Search onSearch={handleSearch} />
 
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
         {beers &&
