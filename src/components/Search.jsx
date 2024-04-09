@@ -6,7 +6,7 @@ function Search({ onSearch }) {
 
   useEffect(() => {
     const fetchBeers = async () => {
-      if (query) {
+      if (query.length >= 2) {
         try {
           const response = await axios.get(
             `https://ih-beers-api2.herokuapp.com/beers/search?q=${query}`
@@ -27,7 +27,7 @@ function Search({ onSearch }) {
       }
     };
 
-    const timerId = setTimeout(() => fetchBeers(), 100); // Debounce delay
+    const timerId = setTimeout(() => fetchBeers(), 500); // Debounce delay
     return () => clearTimeout(timerId); // Cleanup on unmount or query change
   }, [query, onSearch]);
 
