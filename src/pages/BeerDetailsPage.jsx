@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import beersJSON from "./../assets/beers.json";
 
 
@@ -11,6 +12,20 @@ function BeerDetailsPage() {
   const navigate = useNavigate();
 
 
+  const {beerId} = useParams();
+
+  useEffect(() => 
+{
+
+  axios.get(`https://ih-beers-api2.herokuapp.com/beers/${beerId}`)
+  .then((response) => {
+    setBeer(response.data)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+}, [])
 
   // TASKS:
   // 1. Get the beer ID from the URL, using the useParams hook.
