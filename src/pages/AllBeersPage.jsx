@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Search from "../components/Search";
-import beersJSON from "./../assets/beers.json";
-import axios from "axios";
+import { Link } from "react-router-dom"
+import { useState, useEffect } from "react"
+import Search from "../components/Search"
+import axios from "axios"
 const apiURL = "https://ih-beers-api2.herokuapp.com/beers"
 
 
@@ -20,6 +19,13 @@ function AllBeersPage() {
   useEffect(() => {
     getAllBeers()
   }, [])
+
+  const editBeer = () => {
+    axios
+      .delete(`${apiURL}/beers/${projectId}`)
+      .then(() => navigate('/beers'))
+      .catch((error) => console.log(error))
+  }
 
   return (
     <>
@@ -47,6 +53,9 @@ function AllBeersPage() {
                       </p>
                     </div>
                   </div>
+                </Link>
+                <Link to={"/beers/edit/" + beer._id}>
+                  <button onClick={editBeer}>Edit 🍺<em>{beer.title}</em></button>
                 </Link>
               </div>
             );

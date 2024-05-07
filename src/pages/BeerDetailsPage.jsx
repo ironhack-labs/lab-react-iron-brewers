@@ -6,7 +6,7 @@ const apiURL = "https://ih-beers-api2.herokuapp.com/beers"
 
 function BeerDetailsPage() {
 
-  const [beer, setBeer] = useState(null)
+  const [beer, setBeer] = useState([])
   const { beerId } = useParams()
 
   const navigate = useNavigate()
