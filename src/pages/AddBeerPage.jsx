@@ -29,29 +29,28 @@ function AddBeerPage() {
 
   const handleCreateBeer = async (event) => {
     event.preventDefault();
-    // postData()
-
-    const postData = async () => {
-      const newBeer = {
-        name,
-        tagline,
-        description,
-        image_url: imageUrl,
-        first_brewed: firstBrewed,
-        brewers_tips: brewersTips,
-        attenuation_level: Number(attenuationLevel),
-        contributed_by: contributedBy,
-      };
-      try {
-        const { data } = await axios.post(
-          "https://ih-beers-api2.herokuapp.com/beers/new",
-          newBeer
-        );
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
+    postData();
+  };
+  const postData = async () => {
+    const newBeer = {
+      name,
+      tagline,
+      description,
+      image_url: imageUrl,
+      first_brewed: firstBrewed,
+      brewers_tips: brewersTips,
+      attenuation_level: attenuationLevel.toString(),
+      contributed_by: contributedBy,
     };
+    try {
+      const { data } = await axios.post(
+        "https://ih-beers-api2.herokuapp.com/beers/new",
+        newBeer
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Structure and the content of the page showing the form for adding a new beer. You can leave this as it is.
