@@ -4,6 +4,8 @@ function Search({ handleSearchBeer, searchState, setSearchState }) {
 
   // wrap on a form tag because then when one press enter, it also submittes the search
 
+  // https://www.digitalocean.com/community/tutorials/react-live-search-with-axios
+
   return (
     <div className="d-inline-flex justify-content-center align-items-center w-100 p-4">
       <div className="input-group mb-2 w-50">
