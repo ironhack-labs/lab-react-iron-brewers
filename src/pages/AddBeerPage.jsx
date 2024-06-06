@@ -28,7 +28,7 @@ function AddBeerPage() {
   // 3. Once the beer is created, navigate the user to the page showing the list of all beers.
 
   const handleCreateBeer = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // prevents the default behaviour: reloading the page (which happens with the html tag form)
     postData();
   };
   const postData = async () => {
