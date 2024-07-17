@@ -1,10 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-function Search() {
-  const [search, setSearch] = useState("");
-  const handleChange = (event) => {
-    setSearch(event.target.value);
-  };
+function Search({ search, handleChange }) {
   useEffect(() => {
     axios
       .get(`https://ih-beers-api2.herokuapp.com/beers/search?q=${search}`)

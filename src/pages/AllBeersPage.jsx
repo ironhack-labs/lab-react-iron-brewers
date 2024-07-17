@@ -6,7 +6,24 @@ import axios from "axios";
 function AllBeersPage() {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
   const [beers, setBeers] = useState([]);
+  const [allBeers, setAllBeers] = useState([]); // New state for holding the full list
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const handleChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  useEffect(() => {
+    if (search === "") {
+      setBeers(allBeers); // Reset to full list if search is cleared
+    } else {
+      setBeers(
+        allBeers.filter((beer) =>
+          beer.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
+  }, [search, allBeers]);
 
   useEffect(() => {
     axios
@@ -14,6 +31,7 @@ function AllBeersPage() {
       .then((response) => {
         if (response.status === 200) {
           setBeers(response.data);
+          setAllBeers(response.data); // Update allBeers with the fetched data
         } else {
           console.log("Beer not found");
         }
@@ -30,7 +48,7 @@ function AllBeersPage() {
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
     <>
-      <Search beers={beers} />
+      <Search search={search} handleChange={handleChange} />
 
       {loading && <h1>Loading...</h1>}
 

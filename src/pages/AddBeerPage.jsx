@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function AddBeerPage() {
+  const navigate = useNavigate();
+
   // State variables to store the values of the form inputs. You can leave these as they are.
   const [name, setName] = useState("");
   const [tagline, setTagline] = useState("");
@@ -50,7 +52,7 @@ function AddBeerPage() {
       .then((response) => {
         console.log(response);
         reset();
-        <Navigate to="/beers" />;
+        navigate("/beers");
       })
       .catch((error) => console.log(error));
   };
