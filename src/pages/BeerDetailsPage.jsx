@@ -1,42 +1,45 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import beersJSON from "./../assets/beers.json";
 import axios from "axios";
 
-
 function BeerDetailsPage() {
-  // Mock initial state, to be replaced by data from the Beers API. Store the beer info retrieved from the Beers API in this state variable.
-  const [beer, setBeer] = useState(beersJSON[0]);
+  // Initial state set to null
+  const [beer, setBeer] = useState(null);
 
-  // React Router hook for navigation. We use it for the back button. You can leave this as it is.
+  // React Router hook for navigation
   const navigate = useNavigate();
-  const beerId = useParams();
 
-
-
-  // TASKS:
-  // 1. Get the beer ID from the URL, using the useParams hook.
-  // 2. Set up an effect hook to make a request for the beer info from the Beers API.
-  // 3. Use axios to make a HTTP request.
-  // 4. Use the response data from the Beers API to update the state variable.
-  const API_URL = "https://ih-beers-api2.herokuapp.com/beers"
+  // Get beer ID from the URL parameters
+  const { beerId } = useParams();
   
+  // Log the beerId to verify
+  console.log("Beer ID:", beerId);
+
+  // Define the base URL for the API
+  const API_URL = "https://ih-beers-api2.herokuapp.com/beers";
+
+  // Function to fetch beer details from the API
   const getBeer = () => {
     axios
-      .get(`${API_URL}/beers/${beerId}`)
-      .then((response) => setBeer(response.data))
-      .catch((error) => console.log (error));
-  }
+      .get(`${API_URL}/${beerId}`)
+      .then((response) => {
+        console.log("API Response:", response.data); // Log the response to verify
+        setBeer(response.data);
+      })
+      .catch((error) => console.log("API Error:", error));
+  };
 
+  // UseEffect to fetch beer details on component mount
   useEffect(() => {
-    getBeer();
-  },[])
+    if (beerId) {
+      getBeer();
+    }
+  }, [beerId]);
 
-
-  // Structure and the content of the page showing the beer details. You can leave this as it is:
+  // Structure and the content of the page showing the beer details
   return (
     <div className="d-inline-flex flex-column justify-content-center align-items-center w-100 p-4">
-      {beer && (
+      {beer ? (
         <>
           <img
             src={beer.image_url}
@@ -59,6 +62,8 @@ function BeerDetailsPage() {
             Back
           </button>
         </>
+      ) : (
+        <p>Loading...</p>
       )}
     </div>
   );
