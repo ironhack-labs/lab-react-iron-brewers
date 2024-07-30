@@ -1,25 +1,39 @@
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import HomePage from "./pages/HomePage";
-import AllBeersPage from "./pages/AllBeersPage";
-import RandomBeerPage from "./pages/RandomBeerPage";
-import AddBeerPage from "./pages/AddBeerPage";
-import BeerDetailsPage from "./pages/BeerDetailsPage";
+import './App.css'
+import { Route, Routes } from 'react-router-dom'
+import HomePage from './pages/HomePage/HomePage'
+import NavBar from './components/NavBar/NavBar'
+import ProjectsPage from './pages/ProjectsPage/ProjectsPage'
+import NewProjectFormPage from './pages/NewProjectFormPage/NewProjectFormPage'
+import ProjectDetailsPage from './pages/ProjectDetailsPage/ProjectDetailsPage'
+import ProjectEditPage from './pages/ProjectEditPage/ProjectEditPage'
 
 function App() {
+
   return (
-    <div className="App">
-    <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/beers" element={<AllBeersPage />} />
-        <Route path="/random-beer" element={<RandomBeerPage />} />
-        <Route path="/new-beer" element={<AddBeerPage />} />
-        <Route path="/beers/:beerId" element={<BeerDetailsPage />} />
-      </Routes>
-    </div>
-  );
+    <main className="App">
+      <div className='navbar navbar-expand navbar-dark bg-dark'>
+        <div className="container-fluid">
+          <div id="navbar" className='collapse navbar-collapse'>
+            <NavBar />
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-10">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/projects/:project_id" element={<ProjectDetailsPage />} />
+              <Route path="/projects/edit/:project_id" element={<ProjectEditPage />} />
+              <Route path="/new-project" element={<NewProjectFormPage />} />
+              <Route path="*" element={<h1 className='text-center py-5'>404 error - Not found! 😶‍🌫️</h1>} />
+            </Routes>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
 }
 
-export default App;
+export default App
