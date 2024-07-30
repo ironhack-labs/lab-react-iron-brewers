@@ -1,25 +1,33 @@
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import HomePage from "./pages/HomePage";
-import AllBeersPage from "./pages/AllBeersPage";
-import RandomBeerPage from "./pages/RandomBeerPage";
-import AddBeerPage from "./pages/AddBeerPage";
-import BeerDetailsPage from "./pages/BeerDetailsPage";
+
+import { Route, Routes } from 'react-router-dom'
+import './App.css'
+import Navbar from './components/Navbar/Navbar'
+import HomePage from './pages/HomePage/HomePage'
+import ProjectsPage from './pages/ProjectsPage/ProjectsPage'
+import ProjectDetailsPage from './pages/ProjectDetailsPage/ProjectDetailsPage'
+import ProjectEditPage from './pages/ProjectEditPage/ProjectEditPage'
+import AddNewProjects from './pages/AddNewProjects/AddNewProjects'
 
 function App() {
+
+
   return (
     <div className="App">
-    <Navbar />
+      <Navbar />
+
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/beers" element={<AllBeersPage />} />
-        <Route path="/random-beer" element={<RandomBeerPage />} />
-        <Route path="/new-beer" element={<AddBeerPage />} />
-        <Route path="/beers/:beerId" element={<BeerDetailsPage />} />
+
+        <Route path='/' element={<HomePage />} />
+        <Route path='/projects' element={<ProjectsPage />} />
+        <Route path='/projects/:id' element={<ProjectDetailsPage />} />
+        <Route path='/projects/edit/:id' element={<ProjectEditPage />} />
+        <Route path="/create" element={<AddNewProjects />} />
+
+        <Route path='*' element={<h1>404 NOT FOUND</h1>} />
+
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
