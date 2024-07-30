@@ -1,0 +1,50 @@
+@import "https://unpkg.com/@material/layout-grid/dist/mdc.layout-grid.min.css";
+@import "https://unpkg.com/@material/typography/dist/mdc.typography.min.css";
+@import "https://unpkg.com/@material/top-app-bar/dist/mdc.topAppBar.min.css";
+@import "https://unpkg.com/@material/list/dist/mdc.list.min.css";
+@import "https://unpkg.com/@material/card/dist/mdc.card.min.css";
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.mdc-top-app-bar {
+    background-color: #6200ea;
+    color: white;
+}
+
+.mdc-card {
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mdc-card__content {
+    padding: 1rem;
+}
+
+footer.mdc-card {
+    background-color: #6200ea;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.mdc-typography--headline5,
+.mdc-typography--headline6,
+.mdc-typography--body1 {
+    margin: 0.5rem 0;
+}
+
+ul.mdc-list,
+ol.mdc-list--ordered {
+    padding-left: 1.5rem;
+}
+
+.mdc-list-item__text {
+    line-height: 1.5;
+}
