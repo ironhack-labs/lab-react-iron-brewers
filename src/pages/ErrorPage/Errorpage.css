@@ -1,0 +1,12 @@
+.ascii-art-container {
+    font-family: 'Courier New', Courier, monospace;
+    /* Fuente monoespaciada */
+    white-space: pre;
+    /* Mantiene los espacios en blanco y saltos de línea */
+    background-color: #000;
+    /* Fondo negro para mejor contraste */
+    color: #fff;
+    /* Color de texto blanco */
+    padding: 20px;
+    /* Espacio alrededor del arte */
+}
