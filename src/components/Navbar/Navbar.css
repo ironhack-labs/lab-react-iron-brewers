@@ -1,0 +1,14 @@
+.Navbar {
+    background-color: lightcoral;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 35px;
+}
+
+.Navbar a {
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+}

@@ -1,0 +1,8 @@
+.ProjectCard {
+    color: lightcoral;
+    background-color: black;
+    width: 700px;
+    margin: 10px auto;
+    border-radius: 50px;
+    text-align: center;
+}

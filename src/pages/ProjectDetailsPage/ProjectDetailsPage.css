@@ -1,0 +1,10 @@
+.ProjectDetailsPage {
+    color: lightcoral;
+    background-color: black;
+    width: 700px;
+    height: 200px;
+    margin: 10px auto;
+    border-radius: 50px;
+    text-align: center;
+    padding-top: 20px;
+}
