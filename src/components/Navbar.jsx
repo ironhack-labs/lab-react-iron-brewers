@@ -1,18 +1,23 @@
-import homeIcon from "../assets/home-icon.png";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
-function Navbar() {
-  return (
-    <Link to="/">
-      <nav style={{ background: "cornflowerblue", textAlign: "center", padding: "10px 40px" }}>
-        <img
-          src={homeIcon}
-          alt="home icon"
-          style={{ height: "30px", width: "auto" }}
-        />
-      </nav>
-    </Link>
-  );
+
+const Navbar = () => {
+
+    return (
+        <nav>
+            <Link to="/">
+                <button>Home</button>
+            </Link>
+            <Link to="/projects">
+                <button>Projects</button>
+            </Link>
+
+            <Link to="/projects/meloinvento/">
+                <button>New Projects</button>
+            </Link>
+
+        </nav>
+    )
 }
 
-export default Navbar;
+export default Navbar
