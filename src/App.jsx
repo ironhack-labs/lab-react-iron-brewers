@@ -1,25 +1,30 @@
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import HomePage from "./pages/HomePage";
-import AllBeersPage from "./pages/AllBeersPage";
-import RandomBeerPage from "./pages/RandomBeerPage";
-import AddBeerPage from "./pages/AddBeerPage";
-import BeerDetailsPage from "./pages/BeerDetailsPage";
+import './App.css'
+import { Routes, Route } from 'react-router-dom'
+import HomePage from './Pages/HomePage'
+import ProjectsPage from './Pages/ProyectsPage'
+import ProjectDetailsPage from './Pages/ProjectDetailsPage'
+import ProjectEditPage from './Pages/ProyecteditPage'
+import NewProjectPage from './Pages/NewProjectPage'
 
 function App() {
+
+
   return (
-    <div className="App">
-    <Navbar />
+    <div className='App'>
+      <p>aqui esta la App.jsx </p>
+
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/beers" element={<AllBeersPage />} />
-        <Route path="/random-beer" element={<RandomBeerPage />} />
-        <Route path="/new-beer" element={<AddBeerPage />} />
-        <Route path="/beers/:beerId" element={<BeerDetailsPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects/:projectId" element={<ProjectDetailsPage />} />
+        <Route path="/projects/edit/:projectId" element={<ProjectEditPage />} />
+        <Route path="/create" element={<NewProjectPage />} />
+
+        <Route path="*" element={<h1>404 ERROR</h1>} />
+
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
