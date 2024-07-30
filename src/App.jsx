@@ -5,13 +5,14 @@ import ProjectsPage from './Pages/ProyectsPage'
 import ProjectDetailsPage from './Pages/ProjectDetailsPage'
 import ProjectEditPage from './Pages/ProyecteditPage'
 import NewProjectPage from './Pages/NewProjectPage'
+import Navbar from './Component/Navbar'
 
 function App() {
 
 
   return (
     <div className='App'>
-      <p>aqui esta la App.jsx </p>
+      <Navbar />
 
       <Routes>
         <Route path="/" element={<HomePage />} />

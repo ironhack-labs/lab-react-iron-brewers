@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import ProjectDetailsPage from "./ProjectDetailsPage"
 
 
 const API_URL = "https://project-management-api-4641927fee65.herokuapp.com"
@@ -32,10 +33,10 @@ const ProjectsPage = () => {
             {loading ?
                 <h1>CARGANDO...</h1>
                 : projects.map(elm => {
-
+                    console.log(elm)
                     return (
-                        <Link key={projects.id} to={`/projects/${projects.id}`}  >
-                            <h3>{projects.title}</h3>
+                        <Link to={`/projects/${elm.id}`} key={elm.id}>
+                            <ProjectDetailsPage {...elm} />
                         </Link>
 
                     )

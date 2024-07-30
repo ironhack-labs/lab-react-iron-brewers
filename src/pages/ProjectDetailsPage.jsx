@@ -1,8 +1,12 @@
-const ProjectDetailsPage = () => {
+const ProjectDetailsPage = ({ title, description }) => {
 
 
     return (
-        <p>aqui esta ProductDetailsPage</p>
+        <div>
+            <p>Title: {title}</p>
+            <p>Description: {description}</p>
+
+        </div>
 
     )
 }
