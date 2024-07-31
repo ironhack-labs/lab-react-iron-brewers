@@ -1,0 +1,32 @@
+.ProjectCard {
+    color: midnightblue;
+    text-align: center;
+    margin: 20px 50px;
+    padding: 20px;
+    background: white;
+    border-radius: 20px;
+}
+
+.changeProjectBtn {
+    border: 2px solid midnightblue;
+    background-color: lavender;
+    border-radius: 20px;
+    padding: 5px 8px;
+}
+
+.ProjectCard button {
+    background: lavender;
+    color: #646cff;
+    border: 2px solid midnightblue;
+    border-radius: 20px;
+    padding: 5px 8px;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
