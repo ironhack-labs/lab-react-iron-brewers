@@ -1,0 +1,12 @@
+.ProjectsList {
+    color: midnightblue;
+    text-align: center;
+    margin: 20px 50px;
+}
+
+.EachProject {
+    margin: 20px 50px;
+    padding: 20px;
+    background: white;
+    border-radius: 20px;
+}
