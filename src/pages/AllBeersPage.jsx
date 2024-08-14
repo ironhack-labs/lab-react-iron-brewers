@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Search from "../components/Search";
 import beersJSON from "./../assets/beers.json";
+import axios from "axios";
 
 
 
@@ -16,7 +17,20 @@ function AllBeersPage() {
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
 
+  const getAllProjects = () => {
+    axios
+      .get(`https://ih-beers-api2.herokuapp.com/beers`)
+      .then((response) => {
+        const beersFromApi = response.data;
+        const newList = beersFromApi.reverse();
+        setBeers(newList);
+      })
+      .catch((error) => console.log("Error getting projects from the API...", error));
+  };
 
+  useEffect(() => {
+    getAllProjects();
+  }, []);
 
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
