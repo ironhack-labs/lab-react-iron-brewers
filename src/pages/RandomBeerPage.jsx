@@ -1,30 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import beersJSON from "./../assets/beers.json";
-
+import axios from "axios";  // Make sure to import axios
 
 function RandomBeersPage() {
-  // Mock initial state, to be replaced by data from the Beers API. Store the beer info retrieved from the Beers API in this state variable.
-  const [randomBeer, setRandomBeer] = useState(beersJSON[0]);
+  // State variable to store the random beer info retrieved from the Beers API.
+  const [randomBeer, setRandomBeer] = useState(null);
 
-  // React Router hook for navigation. We use it for the back button. You can leave this as it is.
+  // React Router hook for navigation.
   const navigate = useNavigate();
 
+  // Effect hook to fetch a random beer from the Beers API
+  useEffect(() => {
+    const fetchRandomBeer = async () => {
+      try {
+        const response = await axios.get("https://ih-beers-api2.herokuapp.com/beers/random");
+        setRandomBeer(response.data); // Update the state with the random beer data
+      } catch (error) {
+        console.error("Error fetching the random beer:", error);
+      }
+    };
 
-  
-  // TASKS:
-  // 1. Set up an effect hook to make a request for a random beer from the Beers API.
-  // 2. Use axios to make a HTTP request.
-  // 3. Use the response data from the Beers API to update the state variable.
+    fetchRandomBeer(); // Call the function to fetch the beer
+  }, []); // Empty dependency array means this effect runs once when the component mounts
 
-
-
-  // The logic and the structure for the page showing the random beer. You can leave this as it is.
+  // The structure for the page showing the random beer
   return (
     <div className="d-inline-flex flex-column justify-content-center align-items-center w-100 p-4">
       <h2>Random Beer</h2>
 
-      {randomBeer && (
+      {randomBeer ? (  // Conditional rendering based on whether randomBeer is set
         <>
           <img
             src={randomBeer.image_url}
@@ -41,12 +45,14 @@ function RandomBeersPage() {
           <button
             className="btn btn-primary"
             onClick={() => {
-              navigate(-1);
+              navigate(-1); // Navigate back when the button is clicked
             }}
           >
             Back
           </button>
         </>
+      ) : (
+        <p>Loading...</p> // Loading message while the beer data is being fetched
       )}
     </div>
   );
