@@ -43,8 +43,9 @@ function AddBeerPage() {
     axios
       .post("https://ih-beers-api2.herokuapp.com/beers/new", newBeer)
       .then((response) => {
-        console.log(response);
-      });
+        console.log(response.message);
+      })
+      .catch((e) => console.log("Error adding beer", e));
     navigate(-1);
   };
 
