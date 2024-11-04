@@ -1,4 +1,10 @@
-function Search() {
+import React from "react";
+
+function Search({ onSearch }) {
+  const handleInputChange = (e) => {
+    onSearch(e.target.value);
+  };
+
   return (
     <div className="d-inline-flex justify-content-center align-items-center w-100 p-4">
       <div className="input-group mb-2 w-50">
@@ -9,7 +15,8 @@ function Search() {
         </div>
         <input
           type="text"
-          className="form-control search-bar"
+          className="form-control"
+          onChange = {handleInputChange}
         />
       </div>
     </div>
