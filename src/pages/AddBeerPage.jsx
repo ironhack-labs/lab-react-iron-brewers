@@ -31,7 +31,7 @@ function AddBeerPage() {
 
     e.preventDefault()
 
-    const beerData = { name: name, tagline: tagline, description: description, imageUrl: imageUrl, firstBrewed: firstBrewed, brewersTips: brewersTips, attenuationLevel: attenuationLevel, contributedBy: contributedBy }
+    const beerData = { name: name, tagline: tagline, description: description, image_url: imageUrl, first_brewed: firstBrewed, brewers_tips: brewersTips, attenuation_level: attenuationLevel, contributed_by: contributedBy }
 
     axios
       .post(`${API_URL}/beers/new`, beerData)
