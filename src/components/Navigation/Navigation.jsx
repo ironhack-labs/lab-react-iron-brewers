@@ -1,7 +1,7 @@
-import homeIcon from "../assets/home-icon.png";
+import homeIcon from "../../assets/home-icon.png";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navigation() {
   return (
     <Link to="/">
       <nav style={{ background: "cornflowerblue", textAlign: "center", padding: "10px 40px" }}>
@@ -15,4 +15,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Navigation;
