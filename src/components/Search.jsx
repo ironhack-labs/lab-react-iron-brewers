@@ -1,4 +1,4 @@
-function Search() {
+function Search({ searchQuery, setSearchQuery }) {
   return (
     <div className="d-inline-flex justify-content-center align-items-center w-100 p-4">
       <div className="input-group mb-2 w-50">
@@ -7,7 +7,16 @@ function Search() {
             Search
           </span>
         </div>
-        <input type="text" className="form-control search-bar" />
+        <input
+          value={searchQuery}
+          type="text"
+          className="form-control search-bar"
+          onChange={(e) => {
+            console.log(searchQuery);
+
+            setSearchQuery(e.target.value);
+          }}
+        />
       </div>
     </div>
   );
