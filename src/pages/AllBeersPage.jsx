@@ -1,27 +1,62 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Search from "../components/Search";
-import beersJSON from "./../assets/beers.json";
-
-
+//import beersJSON from "./../assets/beers.json"; //mock data
+import axios from 'axios';
 
 function AllBeersPage() {
-  // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
-  const [beers, setBeers] = useState(beersJSON);
+  const [beers, setBeers] = useState();
+  //api call async await
+  /* useEffect(() => {
+    const fetchBeers = async () => {
+      try {
+        const response = await fetch('https://ih-beers-api2.herokuapp.com/beers');
+        const data = await response.json();
+        //console.log('beers: ', data);
+        setBeers(data);
 
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchBeers();
+  }, []); */
 
+  //api call async await with axios
+  /*   useEffect(() => {
+      const fetchBeers = async () => {
+        try {
+          const { data } = await axios.get('https://ih-beers-api2.herokuapp.com/beers');
+          setBeers(data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchBeers();
+    }, []); */
 
-  // TASKS:
-  // 1. Set up an effect hook to make a request to the Beers API and get a list with all the beers.
-  // 2. Use axios to make a HTTP request.
-  // 3. Use the response data from the Beers API to update the state variable.
+  //api call fetch.then with axios
+  useEffect(() => {
+    axios(`https://ih-beers-api2.herokuapp.com/beers`)
+      .then(response => setBeers(response.data))
+      .catch(err => console.log(err));
+  }, []);
+  //search
+  const [searchParams, setSearchParams] = useSearchParams();
+  const beerToSearch = searchParams.get('q');
 
-
+  function filterBeersOnChange() {
+    e.preventDefault();
+    axios.get(`https://ih-beers-api2.herokuapp.com/beers/search?q=${beerToSearch}`)
+      .then(response => setBeers(response.data))
+      //setSearchParams(pre => pre + beerToSearch)
+      .catch(err => console.log(err));
+  }
 
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
     <>
-      <Search />
+      <Search onChange={filterBeersOnChange} searchParams={searchParams} setSearchParams={setSearchParams} />
 
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
         {beers &&

@@ -1,24 +1,52 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import beersJSON from "./../assets/beers.json";
-
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+//import beersJSON from "./../assets/beers.json";
+import axios from 'axios';
 
 function BeerDetailsPage() {
   // Mock initial state, to be replaced by data from the Beers API. Store the beer info retrieved from the Beers API in this state variable.
-  const [beer, setBeer] = useState(beersJSON[0]);
-
+  const [beer, setBeer] = useState();
+  const { beerId } = useParams();
   // React Router hook for navigation. We use it for the back button. You can leave this as it is.
   const navigate = useNavigate();
 
+  //async await
+  /* useEffect(() => {
+    const fetch1Beer = async () => {
+      try {
+        const response = await fetch(`https://ih-beers-api2.herokuapp.com/beers/${beerId}`);
+        const data = await response.json();
+        console.log('the beer is served:', data);
+        setBeer(data);
 
+      } catch (error) {
+        console.log(error);
 
-  // TASKS:
-  // 1. Get the beer ID from the URL, using the useParams hook.
-  // 2. Set up an effect hook to make a request for the beer info from the Beers API.
-  // 3. Use axios to make a HTTP request.
-  // 4. Use the response data from the Beers API to update the state variable.
+      }
+    };
+    fetch1Beer();
+  }, [beerId]); */
 
+  //async await with axios
+  /* useEffect(() => {
+    const fetch1Beer = async () => {
+      try {
+        const { data } = await axios.get(`https://ih-beers-api2.herokuapp.com/beers/${beerId}`);
+        setBeer(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetch1Beer();
+  }, [beerId]); */
 
+  //fetch then with axios
+  useEffect(() => {
+    //axios.get(`https://ih-beers-api2.herokuapp.com/beers/${beerId}`)
+    axios(`https://ih-beers-api2.herokuapp.com/beers/${beerId}`)
+      .then(response => setBeer(response.data))
+      .catch(err => console.log(err));
+  }, [beerId]);
 
   // Structure and the content of the page showing the beer details. You can leave this as it is:
   return (
