@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Search from "../components/Search";
-import beersJSON from "./../assets/beers.json";
+//import beersJSON from "./../assets/beers.json";
 import axios from "axios";
 
 function AllBeersPage() {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
-  const [beers, setBeers] = useState(beersJSON);
+  const [beers, setBeers] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('q');
 
   useEffect(() => {
     getData();
@@ -23,10 +25,21 @@ function AllBeersPage() {
       });
   }
 
+  async function getDataQuery() {
+    const url = "https://ih-beers-api2.herokuapp.com/beers/search?q=" + query;
+    return axios.get(url)
+      .then((result) => {
+        console.log("Result:", result);
+        setBeers(result.data);
+      }).catch((error) => {
+        console.log("Error:", error);
+      });
+  }
+
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
     <>
-      <Search />
+      <Search onChange={getDataQuery} searchParams={searchParams} setSearchParams={setSearchParams} />
 
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
         {beers &&
