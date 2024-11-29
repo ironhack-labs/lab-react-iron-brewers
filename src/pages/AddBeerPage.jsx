@@ -1,4 +1,6 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 function AddBeerPage() {
   // State variables to store the values of the form inputs. You can leave these as they are.
@@ -21,7 +23,22 @@ function AddBeerPage() {
   const handleAttenuationLevel = (e) => setAttenuationLevel(e.target.value);
   const handleContributedBy = (e) => setContributedBy(e.target.value);
 
+  useEffect(() => {
+    postData();
+  }, []);
+  const navigate = Navigate();
 
+  async function postData() {
+    const url = "https://ih-beers-api2.herokuapp.com/beers";
+    const data = { name, tagline, description, imageUrl, firstBrewed, brewersTips, attenuationLevel, contributedBy };
+    return axios.patch(url, data)
+      .then((result) => {
+        console.log("Result:", result);
+        navigate("/");
+      }).catch((error) => {
+        console.log("Error:", error);
+      });
+  }
 
   // TASK:
   // 1. Create a function to handle the form submission and send the form data to the Beers API to create a new beer.
