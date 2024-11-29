@@ -17,7 +17,7 @@ function HomePage() {
             <div className="card-body">
               <h3 className="card-title">All Beers</h3>
               <p className="card-text">
-              Explore a collection of beers crafted by various brewers and breweries.
+                Explore a collection of beers crafted by various brewers and breweries.
               </p>
             </div>
           </div>
@@ -28,7 +28,7 @@ function HomePage() {
             <div className="card-body">
               <h3 className="card-title">Random Beer</h3>
               <p className="card-text">
-              Discover unique beers with intriguing details at random, one beer at a time.
+                Discover unique beers with intriguing details at random, one beer at a time.
               </p>
             </div>
           </div>
@@ -39,7 +39,7 @@ function HomePage() {
             <div className="card-body">
               <h3 className="card-title">New Beer</h3>
               <p className="card-text">
-              Unleash your inner brewmaster and share your latest creation with the brewing community.
+                Unleash your inner brewmaster and share your latest creation with the brewing community.
               </p>
             </div>
           </div>
