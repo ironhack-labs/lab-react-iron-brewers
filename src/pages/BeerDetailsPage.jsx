@@ -11,18 +11,21 @@ function BeerDetailsPage() {
 
   // React Router hook for navigation. We use it for the back button. You can leave this as it is.
    const navigate = useNavigate()
-  
-  
-
-
 
   // TASKS:
   // 1. Get the beer ID from the URL, using the useParams hook.
   const dynamicParam = useParams()
-  console.log('parametro dinamico: ', dynamicParam)
   
   // 2. Set up an effect hook to make a request for the beer info from the Beers API.
-  // 3. Use axios to make a HTTP request.
+  useEffect(() => {
+    
+    // 3. Use axios to make a HTTP request.
+    axios.get(`https://ih-beers-api2.herokuapp.com/beers/${dynamicParam.beerId}`)
+    .then((response) => {
+      console.log(response)
+    })
+  },[])
+ 
   // 4. Use the response data from the Beers API to update the state variable.
 
 
