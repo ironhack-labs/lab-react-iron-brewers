@@ -4,8 +4,69 @@ import { MemoryRouter } from "react-router-dom";
 import nock from "nock";
 import axios from "axios";
 import AllBeersPage from "../pages/AllBeersPage";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const API_URL = "https://ih-beers-api2.herokuapp.com";
+
+const AllBeersPage = () =>{
+  const [beers, setBeers] = useState([]);
+  const [loading, setLoading] = useState(true)
+
+  /* const getAllBeers = () =>{
+
+  } */
+  
+  useEffect(() => {
+  axios.get("https://ih-beers-api2.herokuapp.com/beers")
+  .then((response) => {
+    setBeers(response.data);
+  })
+  .catch((error) => {
+    console.log(error)
+  });  
+
+  }, [] );
+
+  /* if (beers.length === 0) {
+    return (
+      <p> Loading beers ... </p>
+    ) 
+  } */
+
+  return (
+    <div>
+      <h1> All Beers </h1>
+
+      <ul>
+        {beers.map((beer) =>(
+        <li key = {beer._id}>
+        <img 
+        src={beer.image_url} 
+        alt={beer.name} 
+        styles = {{height: "80px" }} />
+
+        <h3>
+          <Link to = {`/beers/${beer._id}`}>{beer.name}</Link>
+        </h3>
+        <p>{beer.tagline}</p>
+        
+        
+      </li>
+        
+        ))}
+      
+
+      </ul>
+    </div>
+
+
+  );
+};
+
+export default AllBeersPage;
+
+
 
 axios.defaults.adapter = "http";
 
