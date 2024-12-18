@@ -4,6 +4,52 @@ import { MemoryRouter } from "react-router-dom";
 import nock from "nock";
 import axios from "axios";
 import App from "../App";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+
+const BeerDetailsPage = () => {
+  const { beerId } = useParams();
+  const [beer, setBeer] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios.get(`https://ih-beers-api2.herokuapp.com/beers/${beerId}`)
+      .then((response) => {
+        setBeer(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching beer details:", error);
+        setLoading(false);
+      });
+  }, [beerId]);
+
+  if (loading) {
+    return <p>Loading beer details...</p>;
+  }
+
+  if (!beer) {
+    return <p>Beer not found. Please check the URL.</p>;
+  }
+
+  return (
+    <div>
+      <img src={beer.image_url} alt={beer.name} style={{ height: "200px" }} />
+      <h1>{beer.name}</h1>
+      <p>{beer.tagline}</p>
+      <p>{beer.description}</p>
+      <p>First brewed: {beer.first_brewed}</p>
+      <p>Brewers tips: {beer.brewers_tips}</p>
+      <p>Attenuation level: {beer.attenuation_level}</p>
+      <p>Created by: {beer.contributed_by}</p>
+    </div>
+  );
+};
+
+export default BeerDetailsPage;
+
+
 
 const API_URL = "https://ih-beers-api2.herokuapp.com";
 
