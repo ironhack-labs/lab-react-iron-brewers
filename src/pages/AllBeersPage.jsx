@@ -6,6 +6,8 @@ import Search from "../components/Search";
 function AllBeersPage() {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
   const [beers, setBeers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredBeers, setFilteredBeers] = useState([]);
 
   // TASKS:
   // 1. Set up an effect hook to make a request to the Beers API and get a list with all the beers.
@@ -16,17 +18,34 @@ function AllBeersPage() {
       .get("https://ih-beers-api2.herokuapp.com/beers")
       .then((response) => {
         setBeers(response.data);
+        setFilteredBeers(response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   }, []);
 
+  const handleSearch = (query) => {
+    setSearchQuery(query); 
+    if (query) {
+      axios
+        .get(`https://ih-beers-api2.herokuapp.com/beers/search?q=${query}`)
+        .then((response) => {
+          setFilteredBeers(response.data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      setFilteredBeers(beers);
+    }
+  };
+
   return (
     <>
-      <Search />
+      <Search query={searchQuery} onSearch={handleSearch} />
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
-        {beers.map((beer) => (
+        {filteredBeers.map((beer) => (
           <div key={beer._id}>
             <Link to={`/beers/${beer._id}`}>
               <div
