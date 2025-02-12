@@ -12,6 +12,7 @@ function App() {
     <div className="App">
     <Navbar />
       <Routes>
+        <Route></Route>
         <Route path="/" element={<HomePage />} />
         <Route path="/beers" element={<AllBeersPage />} />
         <Route path="/random-beer" element={<RandomBeerPage />} />
