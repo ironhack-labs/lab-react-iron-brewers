@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import beersJSON from "./../assets/beers.json";
+import { useEffect } from "react";
+import axios from "axios";
 
 
 function RandomBeersPage() {
@@ -17,7 +19,18 @@ function RandomBeersPage() {
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
 
+  useEffect(()=>{
 
+    axios.get("https://ih-beers-api2.herokuapp.com/beers/random")
+    .then((response)=>{
+      setRandomBeer(response.data)
+
+    })
+    .catch((e)=>{
+      console.log("Error loading data from API...", e)
+    })
+
+  },[])
 
   // The logic and the structure for the page showing the random beer. You can leave this as it is.
   return (
