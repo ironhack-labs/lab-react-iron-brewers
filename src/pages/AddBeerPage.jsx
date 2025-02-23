@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import * as BeersApi from "../services/api-services";
 
 function AddBeerPage() {
   // State variables to store the values of the form inputs. You can leave these as they are.
@@ -20,7 +23,31 @@ function AddBeerPage() {
   const handleBrewersTips = (e) => setBrewersTips(e.target.value);
   const handleAttenuationLevel = (e) => setAttenuationLevel(e.target.value);
   const handleContributedBy = (e) => setContributedBy(e.target.value);
+  const navigate = useNavigate();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Prepare the beer data to send to the API
+    const newBeer = {
+      name,
+      tagline,
+      description,
+      image_url: imageUrl,
+      first_brewed: firstBrewed,
+      brewers_tips: brewersTips,
+      attenuation_level: attenuationLevel,
+      contributed_by: contributedBy,
+    };
+
+    BeersApi.newBeer(newBeer)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error("Error adding beer:", err);
+      });
+  };
 
 
   // TASK:
@@ -122,7 +149,7 @@ function AddBeerPage() {
             value={contributedBy}
             onChange={handleContributedBy}
           />
-          <button className="btn btn-primary btn-round">Add Beer</button>
+          <button onClick={handleSubmit} className="btn btn-primary btn-round">Add Beer</button>
         </form>
       </div>
     </>
