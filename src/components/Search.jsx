@@ -1,17 +1,17 @@
-function Search() {
+function Search({ onSearch }) {
+  const handleInputChange = (e) => {
+    const searchTerm = e.target.value;
+    onSearch(searchTerm);
+  };
+
   return (
-    <div className="d-inline-flex justify-content-center align-items-center w-100 p-4">
-      <div className="input-group mb-2 w-50">
-        <div className="input-group-prepend">
-          <span className="input-group-text" id="basic-addon1">
-            Search
-          </span>
-        </div>
-        <input
-          type="text"
-          className="form-control search-bar"
-        />
-      </div>
+    <div className="text-center mt-4 mb-3">
+      <input
+        type="text"
+        placeholder="Buscar cerveza por nombre..."
+        className="form-control w-50 mx-auto"
+        onChange={handleInputChange}
+      />
     </div>
   );
 }
