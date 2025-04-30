@@ -37,7 +37,6 @@ function AddBeerPage() {
       contributed_by: formData.contributedBy,
     };
 
-    // Only include image_url if it's not empty
     if (formData.imageUrl) {
       requestBody.image_url = formData.imageUrl;
     }
