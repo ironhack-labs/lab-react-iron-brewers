@@ -25,7 +25,9 @@ function AddBeerPage() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     const newBeer = {
       name: name,
       tagline: tagline,
