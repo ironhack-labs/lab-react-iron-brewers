@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import Search from "../components/Search";
 import beersJSON from "./../assets/beers.json";
+import axios from "axios";
 
 
 
@@ -15,7 +16,18 @@ function AllBeersPage() {
   // 1. Set up an effect hook to make a request to the Beers API and get a list with all the beers.
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
+  useEffect(() => {
+    axios
+      .get('https://ih-beers-api2.herokuapp.com/beers')
+      .then((response) => {
+        setBeers(response.data);
+      })
+      .catch((e) => console.log('Error getting characters from the api...', e));
+  }, []);
 
+  if (beers === null) {
+    return <p>Loading...</p>;
+  }
 
 
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
