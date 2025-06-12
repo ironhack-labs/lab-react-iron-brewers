@@ -11,6 +11,8 @@ function AddBeerPage() {
   const [attenuationLevel, setAttenuationLevel] = useState(0);
   const [contributedBy, setContributedBy] = useState("");
 
+  const navigate = useNavigate();
+
   // Handler functions for the form inputs. You can leave these as they are.
   const handleName = (e) => setName(e.target.value);
   const handleTagline = (e) => setTagline(e.target.value);
@@ -25,7 +27,32 @@ function AddBeerPage() {
 
   // TASK:
   // 1. Create a function to handle the form submission and send the form data to the Beers API to create a new beer.
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newBeer = {
+      name,
+      tagline,
+      description,
+      image_url: imageUrl,
+      first_brewed: firstBrewed,
+      brewers_tips: brewersTips,
+      attenuation_level: Number(attenuationLevel),
+      contributed_by: contributedBy,
+    };
+
+    
   // 2. Use axios to make a POST request to the Beers API.
+  axios
+    .post("https://ih-beers-api2.herokuapp.com/beers/new", newBeer)
+    .then((response) => {
+    console.log("Beer created:", response.data);
+    navigate("/beers"); 
+      })
+      .catch((error) => {
+        console.error("Error creating beer:", error);
+      });
+  };
   // 3. Once the beer is created, navigate the user to the page showing the list of all beers.
 
 
@@ -34,7 +61,7 @@ function AddBeerPage() {
   return (
     <>
       <div className="d-inline-flex flex-column w-100 p-4">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Name</label>
           <input
             className="form-control mb-4"
@@ -53,7 +80,6 @@ function AddBeerPage() {
             value={tagline}
             onChange={handleTagline}
           />
-
           <label className="form-label">Description</label>
           <textarea
             className="form-control mb-4"
@@ -64,7 +90,6 @@ function AddBeerPage() {
             value={description}
             onChange={handleDescription}
           ></textarea>
-
           <label>Image</label>
           <input
             className="form-control mb-4"
@@ -74,7 +99,6 @@ function AddBeerPage() {
             value={imageUrl}
             onChange={handleImageUrl}
           />
-
           <label>First Brewed</label>
           <input
             className="form-control mb-4"
@@ -84,7 +108,6 @@ function AddBeerPage() {
             value={firstBrewed}
             onChange={handleFirstBrewed}
           />
-
           <label>Brewer Tips</label>
           <input
             className="form-control mb-4"
@@ -94,13 +117,10 @@ function AddBeerPage() {
             value={brewersTips}
             onChange={handleBrewersTips}
           />
-
           <label>Attenuation Level</label>
           <div className="input-group mb-2">
             <div className="input-group-prepend">
-              <span className="input-group-text" id="basic-addon1">
-                %
-              </span>
+              <span className="input-group-text" id="basic-addon1">%</span>
             </div>
             <input
               className="form-control mb-4"
@@ -112,7 +132,6 @@ function AddBeerPage() {
               max={100}
             />
           </div>
-
           <label>Contributed By</label>
           <input
             className="form-control mb-4"
