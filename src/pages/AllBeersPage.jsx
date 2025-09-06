@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Search from "../components/Search";
 import beersJSON from "./../assets/beers.json";
+import axios from "axios"
 
 
 
-function AllBeersPage() {
+function AllBeersPage({beers} ) {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
-  const [beers, setBeers] = useState(beersJSON);
 
 
 
@@ -17,12 +17,22 @@ function AllBeersPage() {
   // 3. Use the response data from the Beers API to update the state variable.
 
 
+  /*useEffect( () => {
+    getBeerData(); 
 
-  // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
-  return (
-    <>
-      <Search />
+  }, []); 
 
+  const getBeerData = () => {
+    axios.get("https://beers-lab-back.onrender.com/")
+    .then((response) => setBeers(response.data))
+    .catch((error) => console.log(error)); */
+
+
+
+// The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
+return (
+  <>
+    <Search />
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
         {beers &&
           beers.map((beer, i) => {
@@ -50,8 +60,8 @@ function AllBeersPage() {
             );
           })}
       </div>
-    </>
-  );
+  </>
+)
 }
 
 export default AllBeersPage;
