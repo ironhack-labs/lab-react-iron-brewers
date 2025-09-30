@@ -232,7 +232,7 @@ Check [this example](https://reactrouter.com/en/6.10.0/hooks/use-params) if you 
 
 To get the details of a specific beer, you need to make a `GET` request to the Beers API endpoint `https://beers-api.edu.ironhack.com/beers/:id`, where `:id` should be replaced with the id of the selected beer. 
 
-**Example:** [https://beers-api.edu.ironhack.com/beers/**5fb6a86265b9c209606e10e2**](https://beers-api.edu.ironhack.com/beers/5fb6a86265b9c209606e10e2)
+**Example:** [https://beers-api.edu.ironhack.com/beers/68dba3133e973f0015994d3e](https://beers-api.edu.ironhack.com/beers/68dba3133e973f0015994d3e)
 
 <br>
 
