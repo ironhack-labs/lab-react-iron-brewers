@@ -109,7 +109,7 @@ The API provides the following endpoints:
 | `GET`  | `/`                 | [beers]                                                | Get all the beers from the DB                                |
 | `GET`  | `/:id`              | { beer }                                               | Get a single/specific beer                                   |
 | `GET`  | `/random`           | { beer }                                               | Get a random beer from the DB                                |
-| `POST` | `/new`              | { message: "New beer successfully saved to database!"} | Create a new beer (see iteration 7 for fields)               |
+| `POST` | `/new`              | { message: "New beer successfully saved to database!"} | Create a new beer (see iteration 3 for fields)               |
 | `GET`  | `/search?q={query}` | [beers]                                                | Search beers by name containing the specified term. Example: `/search?q=lager` query will return all beers with the word lager in their name. |
 
 <br>
