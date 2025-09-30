@@ -98,7 +98,7 @@ During an iteration, if your code seems to work as expected but some tests don't
 
 We will be building a React app, so the API (backend) needs to be built somewhere for us, right? You are completely right, we will be using a public API called Beers API. The base URL of the API is:
 
-**`https://ih-beers-api2.herokuapp.com/beers`**
+**`https://beers-api.edu.ironhack.com/beers`**
 
 <br>
 
@@ -168,7 +168,7 @@ The `AllBeersPage` component already displays a list of beers coming from a stat
 
 <br>
 
-Your task is to make a `GET` request to the Beers API endpoint `https://ih-beers-api2.herokuapp.com/beers` using `axios`. This API endpoint returns an **array of beers**. Once you get a response from the Beers API, save it in the state variable `beers`.
+Your task is to make a `GET` request to the Beers API endpoint `https://beers-api.edu.ironhack.com/beers` using `axios`. This API endpoint returns an **array of beers**. Once you get a response from the Beers API, save it in the state variable `beers`.
 
 
 
@@ -230,9 +230,9 @@ Check [this example](https://reactrouter.com/en/6.10.0/hooks/use-params) if you 
 
 #### 2.2 | Make a request to the API
 
-To get the details of a specific beer, you need to make a `GET` request to the Beers API endpoint `https://ih-beers-api2.herokuapp.com/beers/:id`, where `:id` should be replaced with the id of the selected beer. 
+To get the details of a specific beer, you need to make a `GET` request to the Beers API endpoint `https://beers-api.edu.ironhack.com/beers/:id`, where `:id` should be replaced with the id of the selected beer. 
 
-**Example:** [https://ih-beers-api2.herokuapp.com/beers/**5fb6a86265b9c209606e10e2**](https://ih-beers-api2.herokuapp.com/beers/5fb6a86265b9c209606e10e2)
+**Example:** [https://beers-api.edu.ironhack.com/beers/**5fb6a86265b9c209606e10e2**](https://beers-api.edu.ironhack.com/beers/5fb6a86265b9c209606e10e2)
 
 <br>
 
@@ -286,7 +286,7 @@ The `AddBeerPage` component, which is rendered on the `/new-beer` route, already
 
 
 
-Your task is to create a submit handler function that will be called when the user *submits* the form. The handler function should make a `POST` request to the API endpoint `https://ih-beers-api2.herokuapp.com/beers/new` to create a new beer.
+Your task is to create a submit handler function that will be called when the user *submits* the form. The handler function should make a `POST` request to the API endpoint `https://beers-api.edu.ironhack.com/beers/new` to create a new beer.
 
 <br>
 
@@ -354,7 +354,7 @@ In this iteration, you will work on the `RandomBeerPage` component in the `src/p
 
 The `RandomBeerPage` component, which is rendered on the `/random-beer` route, should display a random beer retrieved from the Beers API. 
 
-Your task is to make a `GET` request to the endpoint `https://ih-beers-api2.herokuapp.com/beers/random` to get the data of a random beer to display on the page.
+Your task is to make a `GET` request to the endpoint `https://beers-api.edu.ironhack.com/beers/random` to get the data of a random beer to display on the page.
 
 <br>
 
@@ -400,7 +400,7 @@ As the final feature, your task is to implement a search functionality where use
 
 Your task is to implement the functionality to filter the beers by name. In the `AllBeersPage` component, you will find a `SearchBar` component that is rendered above the list of beers. You should use it as a starting point for implementing the search functionality.
 
-Every time the user types a new letter in the search bar, you should make a request to `https://ih-beers-api2.herokuapp.com/beers/search?q={query}`, passing the input value as the `q` param.
+Every time the user types a new letter in the search bar, you should make a request to `https://beers-api.edu.ironhack.com/beers/search?q={query}`, passing the input value as the `q` param.
 
 <br>
 
