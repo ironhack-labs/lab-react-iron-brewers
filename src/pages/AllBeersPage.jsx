@@ -1,15 +1,24 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Search from "../components/Search";
-import beersJSON from "./../assets/beers.json";
 
 
 
 function AllBeersPage() {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
-  const [beers, setBeers] = useState(beersJSON);
+  const [beers, setBeers] = useState(null);
 
+  useEffect(() => {
 
+    axios.get("https://ih-beers-api2.herokuapp.com/beers")
+    .then((response) => {
+      setBeers(response.data)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+  }, [])
 
   // TASKS:
   // 1. Set up an effect hook to make a request to the Beers API and get a list with all the beers.
@@ -28,7 +37,7 @@ function AllBeersPage() {
           beers.map((beer, i) => {
             return (
               <div key={i}>
-                <Link to={"/beers/" + beer._id}>
+                <Link to={`/beers/${beer._id}`}>
                   <div className="card m-2 p-2 text-center" style={{ width: "24rem", height: "18rem" }}>
                     <div className="card-body">
                       <img
