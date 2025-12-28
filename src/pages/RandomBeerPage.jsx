@@ -1,16 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import beersJSON from "./../assets/beers.json";
+import * as BeersApi from "../services/api-services";
 
 
 function RandomBeersPage() {
   // Mock initial state, to be replaced by data from the Beers API. Store the beer info retrieved from the Beers API in this state variable.
-  const [randomBeer, setRandomBeer] = useState(beersJSON[0]);
+  const [randomBeer, setRandomBeer] = useState();
 
   // React Router hook for navigation. We use it for the back button. You can leave this as it is.
   const navigate = useNavigate();
 
 
+  useEffect(() => {
+    BeersApi.randomBeer()
+      .then((beer) => setRandomBeer(beer))
+      .catch((err) => console.error(err))
+  }, [])
   
   // TASKS:
   // 1. Set up an effect hook to make a request for a random beer from the Beers API.
