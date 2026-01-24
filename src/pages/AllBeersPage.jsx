@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "../components/Search";
 import beersJSON from "./../assets/beers.json";
-
+import axios from "axios"; //import !
 
 
 function AllBeersPage() {
@@ -16,7 +16,17 @@ function AllBeersPage() {
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
 
-
+  useEffect(() =>{
+    const fetchBeers = async () => {
+      try {
+        const response = await axios.get("https://ih-beers-api2.herokuapp.com/beers");
+        setBeers(response.data);
+      } catch (error) {
+        console.error("There is an error fetching the beers", error);
+      }
+    };
+    fetchBeers();
+  },[])
 
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
@@ -28,7 +38,7 @@ function AllBeersPage() {
           beers.map((beer, i) => {
             return (
               <div key={i}>
-                <Link to={"/beers/" + beer._id}>
+                <Link to={`/beers/${beer._id}`}>
                   <div className="card m-2 p-2 text-center" style={{ width: "24rem", height: "18rem" }}>
                     <div className="card-body">
                       <img
