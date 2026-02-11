@@ -18,12 +18,12 @@ function AllBeersPage() {
   // 3. Use the response data from the Beers API to update the state variable.
 
   useEffect(() => {
-      getBeers() 
+      getBeers("") 
   }, [])
 
-  const getBeers = async () => {
+  const getBeers = async (searchText) => {
     try {
-      const response = await axios.get("https://beers-api.edu.ironhack.com/beers")
+      const response = await axios.get(`https://beers-api.edu.ironhack.com/beers/search?q=${searchText}`)
       console.log(response)
       setBeers(response.data)
     } catch (error) {
@@ -41,7 +41,7 @@ function AllBeersPage() {
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
     <>
-      <Search />
+      <Search getBeers={getBeers}/>
 
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
         {beers &&
