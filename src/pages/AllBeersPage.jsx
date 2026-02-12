@@ -1,14 +1,27 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Search from "../components/Search";
 import beersJSON from "./../assets/beers.json";
+import { BASE_URL } from "../components/BaseUrl";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 
 function AllBeersPage() {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
-  const [beers, setBeers] = useState(beersJSON);
+  const [beers, setBeers] = useState([]);
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    axios.get(`${BASE_URL}/beers`)
+    .then(response => {
+      setBeers(response.data)
+    })
+    .catch(e => console.log(e))
+  }, [])
+
+  
 
 
   // TASKS:
@@ -24,10 +37,16 @@ function AllBeersPage() {
       <Search />
 
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
+       
+         <button onClick={() => navigate("/beers/new")}>Add New Beer</button>
+        
+       <br></br>
         {beers &&
           beers.map((beer, i) => {
             return (
-              <div key={i}>
+              <div key={beer._id}>
+
+
                 <Link to={"/beers/" + beer._id}>
                   <div className="card m-2 p-2 text-center" style={{ width: "24rem", height: "18rem" }}>
                     <div className="card-body">
