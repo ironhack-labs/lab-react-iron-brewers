@@ -1,4 +1,8 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const apiUrl = "https://ih-beers-api2.herokuapp.com/beers/new";
 
 function AddBeerPage() {
   // State variables to store the values of the form inputs. You can leave these as they are.
@@ -21,79 +25,67 @@ function AddBeerPage() {
   const handleAttenuationLevel = (e) => setAttenuationLevel(e.target.value);
   const handleContributedBy = (e) => setContributedBy(e.target.value);
 
+  const navigate = useNavigate();
 
+  const dummyJsonForPost = {
+    name: name,
+    tagline: tagline,
+    description: description,
+    image_url: imageUrl,
+    first_brewed: firstBrewed,
+    brewers_tips: brewersTips,
+    attenuation_level: attenuationLevel,
+    contributed_by: contributedBy,
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const dummyJsonForPost = {
+      name: name,
+      tagline: tagline,
+      description: description,
+      image_url: imageUrl,
+      first_brewed: firstBrewed,
+      brewers_tips: brewersTips,
+      attenuation_level: attenuationLevel,
+      contributed_by: contributedBy,
+    };
+
+    axios
+      .post(apiUrl, dummyJsonForPost)
+      .then((resp) => {
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  };
 
   // TASK:
   // 1. Create a function to handle the form submission and send the form data to the Beers API to create a new beer.
   // 2. Use axios to make a POST request to the Beers API.
   // 3. Once the beer is created, navigate the user to the page showing the list of all beers.
 
-
-
   // Structure and the content of the page showing the form for adding a new beer. You can leave this as it is.
   return (
     <>
       <div className="d-inline-flex flex-column w-100 p-4">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Name</label>
-          <input
-            className="form-control mb-4"
-            type="text"
-            name="name"
-            placeholder="Beer Name"
-            value={name}
-            onChange={handleName}
-          />
+          <input className="form-control mb-4" type="text" name="name" placeholder="Beer Name" value={name} onChange={handleName} />
           <label>Tagline</label>
-          <input
-            className="form-control mb-4"
-            type="text"
-            name="tagline"
-            placeholder="Beer Tagline"
-            value={tagline}
-            onChange={handleTagline}
-          />
+          <input className="form-control mb-4" type="text" name="tagline" placeholder="Beer Tagline" value={tagline} onChange={handleTagline} />
 
           <label className="form-label">Description</label>
-          <textarea
-            className="form-control mb-4"
-            type="text"
-            name="description"
-            placeholder="Description"
-            rows="3"
-            value={description}
-            onChange={handleDescription}
-          ></textarea>
+          <textarea className="form-control mb-4" type="text" name="description" placeholder="Description" rows="3" value={description} onChange={handleDescription}></textarea>
 
           <label>Image</label>
-          <input
-            className="form-control mb-4"
-            type="text"
-            name="imageUrl"
-            placeholder="Image URL"
-            value={imageUrl}
-            onChange={handleImageUrl}
-          />
+          <input className="form-control mb-4" type="text" name="imageUrl" placeholder="Image URL" value={imageUrl} onChange={handleImageUrl} />
 
           <label>First Brewed</label>
-          <input
-            className="form-control mb-4"
-            type="text"
-            name="firstBrewed"
-            placeholder="Date - MM/YYYY"
-            value={firstBrewed}
-            onChange={handleFirstBrewed}
-          />
+          <input className="form-control mb-4" type="text" name="firstBrewed" placeholder="Date - MM/YYYY" value={firstBrewed} onChange={handleFirstBrewed} />
 
           <label>Brewer Tips</label>
-          <input
-            className="form-control mb-4"
-            type="text"
-            name="brewersTips"
-            placeholder="..."
-            value={brewersTips}
-            onChange={handleBrewersTips}
-          />
+          <input className="form-control mb-4" type="text" name="brewersTips" placeholder="..." value={brewersTips} onChange={handleBrewersTips} />
 
           <label>Attenuation Level</label>
           <div className="input-group mb-2">
@@ -102,26 +94,11 @@ function AddBeerPage() {
                 %
               </span>
             </div>
-            <input
-              className="form-control mb-4"
-              type="number"
-              name="attenuationLevel"
-              value={attenuationLevel}
-              onChange={handleAttenuationLevel}
-              min={0}
-              max={100}
-            />
+            <input className="form-control mb-4" type="number" name="attenuationLevel" value={attenuationLevel} onChange={handleAttenuationLevel} min={0} max={100} />
           </div>
 
           <label>Contributed By</label>
-          <input
-            className="form-control mb-4"
-            type="text"
-            name="contributedBy"
-            placeholder="Contributed by"
-            value={contributedBy}
-            onChange={handleContributedBy}
-          />
+          <input className="form-control mb-4" type="text" name="contributedBy" placeholder="Contributed by" value={contributedBy} onChange={handleContributedBy} />
           <button className="btn btn-primary btn-round">Add Beer</button>
         </form>
       </div>
