@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import beersJSON from "./../assets/beers.json";
 
 
 function RandomBeersPage() {
   // Mock initial state, to be replaced by data from the Beers API. Store the beer info retrieved from the Beers API in this state variable.
-  const [randomBeer, setRandomBeer] = useState(beersJSON[0]);
+  const [randomBeer, setRandomBeer] = useState(null);
 
   // React Router hook for navigation. We use it for the back button. You can leave this as it is.
   const navigate = useNavigate();
@@ -17,7 +16,22 @@ function RandomBeersPage() {
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
 
+  useEffect(() => {
+    const getRandomBeer = async () => {
+      try {
+        const res = await fetch(`https://beers-lab-back.onrender.com/`);
+        const data = await res.json();
 
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const randomBeer = data[randomIndex];
+
+      navigate(`/beers/${randomBeer._id}`);
+      } catch (error) {
+          console.log("Something went wrong!", error); 
+      }
+    };
+      getRandomBeer();
+  }, []);
 
   // The logic and the structure for the page showing the random beer. You can leave this as it is.
   return (
@@ -40,9 +54,7 @@ function RandomBeersPage() {
 
           <button
             className="btn btn-primary"
-            onClick={() => {
-              navigate(-1);
-            }}
+            onClick={() => navigate("/beers")}
           >
             Back
           </button>
