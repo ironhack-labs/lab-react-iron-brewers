@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function AddBeerPage() {
-  // State variables to store the values of the form inputs. You can leave these as they are.
   const [name, setName] = useState("");
   const [tagline, setTagline] = useState("");
   const [description, setDescription] = useState("");
@@ -11,7 +12,8 @@ function AddBeerPage() {
   const [attenuationLevel, setAttenuationLevel] = useState(0);
   const [contributedBy, setContributedBy] = useState("");
 
-  // Handler functions for the form inputs. You can leave these as they are.
+  const navigate = useNavigate();
+
   const handleName = (e) => setName(e.target.value);
   const handleTagline = (e) => setTagline(e.target.value);
   const handleDescription = (e) => setDescription(e.target.value);
@@ -21,20 +23,32 @@ function AddBeerPage() {
   const handleAttenuationLevel = (e) => setAttenuationLevel(e.target.value);
   const handleContributedBy = (e) => setContributedBy(e.target.value);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
+    const newBeer = {
+      name,
+      tagline,
+      description,
+      image_url: imageUrl,
+      first_brewed: firstBrewed,
+      brewers_tips: brewersTips,
+      attenuation_level: Number(attenuationLevel),
+      contributed_by: contributedBy,
+    };
 
-  // TASK:
-  // 1. Create a function to handle the form submission and send the form data to the Beers API to create a new beer.
-  // 2. Use axios to make a POST request to the Beers API.
-  // 3. Once the beer is created, navigate the user to the page showing the list of all beers.
+    axios
+      .post("https://beers-api.edu.ironhack.com/beers/new", newBeer)
+      .then(() => {
+        navigate("/beers");
+      })
+      .catch((err) => console.log(err));
+  };
 
-
-
-  // Structure and the content of the page showing the form for adding a new beer. You can leave this as it is.
   return (
     <>
       <div className="d-inline-flex flex-column w-100 p-4">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Name</label>
           <input
             className="form-control mb-4"
@@ -53,76 +67,63 @@ function AddBeerPage() {
             value={tagline}
             onChange={handleTagline}
           />
-
           <label className="form-label">Description</label>
           <textarea
             className="form-control mb-4"
             type="text"
             name="description"
-            placeholder="Description"
-            rows="3"
+            placeholder="Beer Description"
             value={description}
             onChange={handleDescription}
-          ></textarea>
-
-          <label>Image</label>
+          />
+          <label>Image URL</label>
           <input
             className="form-control mb-4"
             type="text"
-            name="imageUrl"
-            placeholder="Image URL"
+            name="image_url"
+            placeholder="Beer Image URL"
             value={imageUrl}
             onChange={handleImageUrl}
           />
-
           <label>First Brewed</label>
           <input
             className="form-control mb-4"
             type="text"
-            name="firstBrewed"
-            placeholder="Date - MM/YYYY"
+            name="first_brewed"
+            placeholder="First Brewed"
             value={firstBrewed}
             onChange={handleFirstBrewed}
           />
-
-          <label>Brewer Tips</label>
+          <label>Brewers Tips</label>
           <input
             className="form-control mb-4"
             type="text"
-            name="brewersTips"
-            placeholder="..."
+            name="brewers_tips"
+            placeholder="Brewers Tips"
             value={brewersTips}
             onChange={handleBrewersTips}
           />
-
           <label>Attenuation Level</label>
-          <div className="input-group mb-2">
-            <div className="input-group-prepend">
-              <span className="input-group-text" id="basic-addon1">
-                %
-              </span>
-            </div>
-            <input
-              className="form-control mb-4"
-              type="number"
-              name="attenuationLevel"
-              value={attenuationLevel}
-              onChange={handleAttenuationLevel}
-              min={0}
-              max={100}
-            />
-          </div>
-
+          <input
+            className="form-control mb-4"
+            type="number"
+            name="attenuation_level"
+            placeholder="Attenuation Level"
+            value={attenuationLevel}
+            onChange={handleAttenuationLevel}
+          />
           <label>Contributed By</label>
           <input
             className="form-control mb-4"
             type="text"
-            name="contributedBy"
-            placeholder="Contributed by"
+            name="contributed_by"
+            placeholder="Contributed By"
             value={contributedBy}
             onChange={handleContributedBy}
           />
-          <button className="btn btn-primary btn-round">Add Beer</button>
+          <button type="submit" className="btn btn-primary">
+            Add Beer
+          </button>
         </form>
       </div>
     </>
