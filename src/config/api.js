@@ -1,0 +1,1 @@
+export const api_url = "https://ih-beers-api2.herokuapp.com/beers"
