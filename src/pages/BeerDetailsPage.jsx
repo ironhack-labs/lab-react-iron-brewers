@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import beersJSON from "./../assets/beers.json";
+import axios from "axios";
 
 
 function BeerDetailsPage() {
@@ -18,6 +19,18 @@ function BeerDetailsPage() {
   // 3. Use axios to make a HTTP request.
   // 4. Use the response data from the Beers API to update the state variable.
 
+  const { beerId } = useParams();
+
+  useEffect(() => {
+    axios.get(`https://beers-api.edu.ironhack.com/beers/${beerId}`)
+    .then((result) => {
+        console.log(result);
+        setBeer(result.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }, [beerId])
 
 
   // Structure and the content of the page showing the beer details. You can leave this as it is:
