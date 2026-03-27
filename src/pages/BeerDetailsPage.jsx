@@ -1,51 +1,66 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react"; // Import useEffect for fetching data
+import { useNavigate, useParams } from "react-router-dom"; // Import useParams for getting the beer ID
+import axios from "axios"; // Import axios for making HTTP requests
 import beersJSON from "./../assets/beers.json";
 
-
 function BeerDetailsPage() {
-  // Mock initial state, to be replaced by data from the Beers API. Store the beer info retrieved from the Beers API in this state variable.
+  // Initial state for beer details
   const [beer, setBeer] = useState(beersJSON[0]);
+  const [loading, setLoading] = useState(true); // State to track loading status
+  const [error, setError] = useState(null); // State to track error status
 
-  // React Router hook for navigation. We use it for the back button. You can leave this as it is.
   const navigate = useNavigate();
+  const { id } = useParams(); // Get beer ID from URL
 
+  useEffect(() => {
+    const fetchBeerDetails = async () => {
+      try {
+        // Make a GET request to fetch beer details by ID
+        const response = await axios.get(`https://ih-beers-api2.herokuapp.com/beers/${id}`);
+        setBeer(response.data); // Update the state with the beer data
+      } catch (err) {
+        setError("Failed to fetch beer details."); // Handle error
+        console.error(err);
+      } finally {
+        setLoading(false); // Set loading to false once done
+      }
+    };
 
+    fetchBeerDetails(); // Call the fetch function
+  }, [id]); // Dependency array includes id
 
-  // TASKS:
-  // 1. Get the beer ID from the URL, using the useParams hook.
-  // 2. Set up an effect hook to make a request for the beer info from the Beers API.
-  // 3. Use axios to make a HTTP request.
-  // 4. Use the response data from the Beers API to update the state variable.
-
-
-
-  // Structure and the content of the page showing the beer details. You can leave this as it is:
+  // Structure and content of the page showing the beer details
   return (
     <div className="d-inline-flex flex-column justify-content-center align-items-center w-100 p-4">
-      {beer && (
-        <>
-          <img
-            src={beer.image_url}
-            alt="Beer Image"
-            height="300px"
-            width="auto"
-          />
-          <h3>{beer.name}</h3>
-          <p>{beer.tagline}</p>
-          <p>Attenuation level: {beer.attenuation_level}</p>
-          <p>Description: {beer.description}</p>
-          <p>Created by: {beer.contributed_by}</p>
+      {loading ? ( // Show loading state while fetching
+        <p>Loading...</p>
+      ) : error ? ( // Show error message if there's an error
+        <p>{error}</p>
+      ) : (
+        beer && (
+          <>
+            <img
+              src={beer.image_url}
+              alt="Beer Image"
+              height="300px"
+              width="auto"
+            />
+            <h3>{beer.name}</h3>
+            <p>{beer.tagline}</p>
+            <p>Attenuation level: {beer.attenuation_level}</p>
+            <p>Description: {beer.description}</p>
+            <p>Created by: {beer.contributed_by}</p>
 
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            Back
-          </button>
-        </>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                navigate(-1); // Navigate back to the previous page
+              }}
+            >
+              Back
+            </button>
+          </>
+        )
       )}
     </div>
   );

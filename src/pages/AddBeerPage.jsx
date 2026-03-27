@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import axios from "axios"; // Import axios
 
 function AddBeerPage() {
-  // State variables to store the values of the form inputs. You can leave these as they are.
+  // State variables to store the values of the form inputs
   const [name, setName] = useState("");
   const [tagline, setTagline] = useState("");
   const [description, setDescription] = useState("");
@@ -10,8 +12,10 @@ function AddBeerPage() {
   const [brewersTips, setBrewersTips] = useState("");
   const [attenuationLevel, setAttenuationLevel] = useState(0);
   const [contributedBy, setContributedBy] = useState("");
+  
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
-  // Handler functions for the form inputs. You can leave these as they are.
+  // Handler functions for the form inputs
   const handleName = (e) => setName(e.target.value);
   const handleTagline = (e) => setTagline(e.target.value);
   const handleDescription = (e) => setDescription(e.target.value);
@@ -21,20 +25,39 @@ function AddBeerPage() {
   const handleAttenuationLevel = (e) => setAttenuationLevel(e.target.value);
   const handleContributedBy = (e) => setContributedBy(e.target.value);
 
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
 
+    // Prepare the data to be sent
+    const newBeer = {
+      name,
+      tagline,
+      description,
+      image_url: imageUrl, // Use image_url instead of imageUrl
+      first_brewed: firstBrewed, // Use first_brewed instead of firstBrewed
+      brewers_tips: brewersTips, // Use brewers_tips instead of brewersTips
+      attenuation_level: Number(attenuationLevel), // Ensure this is a number
+      contributed_by: contributedBy // Use contributed_by instead of contributedBy
+    };
 
-  // TASK:
-  // 1. Create a function to handle the form submission and send the form data to the Beers API to create a new beer.
-  // 2. Use axios to make a POST request to the Beers API.
-  // 3. Once the beer is created, navigate the user to the page showing the list of all beers.
+    try {
+      // Make a POST request to the API
+      await axios.post("https://ih-beers-api2.herokuapp.com/beers/new", newBeer);
+      
+      // Navigate to the All Beers page after successful submission
+      navigate("/beers");
+    } catch (error) {
+      console.error("Error creating new beer:", error);
+      // You can also show an error message to the user here if needed
+    }
+  };
 
-
-
-  // Structure and the content of the page showing the form for adding a new beer. You can leave this as it is.
+  // Structure and content of the page showing the form for adding a new beer
   return (
     <>
       <div className="d-inline-flex flex-column w-100 p-4">
-        <form>
+        <form onSubmit={handleSubmit}> {/* Add onSubmit handler */}
           <label>Name</label>
           <input
             className="form-control mb-4"
