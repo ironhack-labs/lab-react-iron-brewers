@@ -1,13 +1,36 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Search from "../components/Search";
-import beersJSON from "./../assets/beers.json";
+//import beersJSON from "./../assets/beers.json";
+import axios from "axios";
 
+/* const api = axios.create({
+  baseURL: "https://beers-api.edu.ironhack.com/beers",
+}) */
 
 
 function AllBeersPage() {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
-  const [beers, setBeers] = useState(beersJSON);
+  const [loading, setLoading] = useState(false);
+  const [beers, setBeers] = useState();
+  const { id } = useParams()
+  
+
+  useEffect(() => {
+
+    const getBeers = async () => {
+      try {
+        setLoading(true)
+        const response = await axios.get("https://beers-api.edu.ironhack.com/beers")
+        console.log(response.data)
+        setBeers(response.data)
+        setLoading(false)
+      } catch (error) {
+        console.log (error);}
+    }
+    getBeers()
+  }, [id])
+  
 
 
 
@@ -24,15 +47,16 @@ function AllBeersPage() {
       <Search />
 
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
-        {beers &&
+        {!loading ? (
           beers.map((beer, i) => {
             return (
               <div key={i}>
                 <Link to={"/beers/" + beer._id}>
                   <div className="card m-2 p-2 text-center" style={{ width: "24rem", height: "18rem" }}>
+                   
                     <div className="card-body">
                       <img
-                        src={beer.image_url}
+                        src="https://ikegger.eu/cdn/shop/products/5l-beer-keg-stainless-steel_5000x.jpg?v=1680665272"
                         style={{ height: "6rem" }}
                         alt={"image of" + beer.name}
                       />
@@ -47,11 +71,14 @@ function AllBeersPage() {
                   </div>
                 </Link>
               </div>
-            );
-          })}
+            )
+            }) 
+          ) : (
+              <p>loading</p>
+          )}
       </div>
     </>
-  );
+  )
 }
 
 export default AllBeersPage;
