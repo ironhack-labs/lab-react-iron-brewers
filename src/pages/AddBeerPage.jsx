@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 function AddBeerPage() {
@@ -10,6 +11,7 @@ function AddBeerPage() {
   const [brewersTips, setBrewersTips] = useState("");
   const [attenuationLevel, setAttenuationLevel] = useState(0);
   const [contributedBy, setContributedBy] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
 
   // Handler functions for the form inputs. You can leave these as they are.
   const handleName = (e) => setName(e.target.value);
@@ -22,6 +24,28 @@ function AddBeerPage() {
   const handleContributedBy = (e) => setContributedBy(e.target.value);
 
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const body = {
+      name,
+      tagline,
+      description,
+      image_url: imageUrl,
+      first_brewed: firstBrewed,
+      brewers_tips: brewersTips,
+      attenuation_level: attenuationLevel,
+      contributed_by: contributedBy
+    }
+
+    try {
+      setIsCreating(true)
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/new`, body)
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   // TASK:
   // 1. Create a function to handle the form submission and send the form data to the Beers API to create a new beer.
@@ -34,7 +58,7 @@ function AddBeerPage() {
   return (
     <>
       <div className="d-inline-flex flex-column w-100 p-4">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Name</label>
           <input
             className="form-control mb-4"
@@ -122,7 +146,7 @@ function AddBeerPage() {
             value={contributedBy}
             onChange={handleContributedBy}
           />
-          <button className="btn btn-primary btn-round">Add Beer</button>
+          <button disabled={isCreating} className="btn btn-primary btn-round">Add Beer</button>
         </form>
       </div>
     </>
