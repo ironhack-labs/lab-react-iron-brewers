@@ -1,26 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function AddBeerPage() {
   // State variables to store the values of the form inputs. You can leave these as they are.
-  const [name, setName] = useState("");
-  const [tagline, setTagline] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [firstBrewed, setFirstBrewed] = useState("");
-  const [brewersTips, setBrewersTips] = useState("");
-  const [attenuationLevel, setAttenuationLevel] = useState(0);
-  const [contributedBy, setContributedBy] = useState("");
+
+  const initialStateForm = {
+    name: "",
+    tagline: "",
+    description: "",
+    image_url: "",
+    first_brewed: "",
+    brewers_tips: "",
+    attenuation_level: 0,
+    contributed_by: ""
+  }
+
+  const [stateForm, setStateForm] = useState(initialStateForm)
+  const navigate = useNavigate()
 
   // Handler functions for the form inputs. You can leave these as they are.
-  const handleName = (e) => setName(e.target.value);
-  const handleTagline = (e) => setTagline(e.target.value);
-  const handleDescription = (e) => setDescription(e.target.value);
-  const handleImageUrl = (e) => setImageUrl(e.target.value);
-  const handleFirstBrewed = (e) => setFirstBrewed(e.target.value);
-  const handleBrewersTips = (e) => setBrewersTips(e.target.value);
-  const handleAttenuationLevel = (e) => setAttenuationLevel(e.target.value);
-  const handleContributedBy = (e) => setContributedBy(e.target.value);
 
+  const handleChange = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    setStateForm(prev => (
+      {
+        ...stateForm,
+        [name]: value
+      }
+    ))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const body = stateForm
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/new`,
+        body
+      )
+      console.log(response)
+      navigate("/beers")
+      // console.log(body)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 
   // TASK:
@@ -34,15 +59,16 @@ function AddBeerPage() {
   return (
     <>
       <div className="d-inline-flex flex-column w-100 p-4">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Name</label>
           <input
             className="form-control mb-4"
             type="text"
             name="name"
             placeholder="Beer Name"
-            value={name}
-            onChange={handleName}
+            value={stateForm.name}
+            required={true}
+            onChange={handleChange}
           />
           <label>Tagline</label>
           <input
@@ -50,8 +76,9 @@ function AddBeerPage() {
             type="text"
             name="tagline"
             placeholder="Beer Tagline"
-            value={tagline}
-            onChange={handleTagline}
+            value={stateForm.tagline}
+            required={true}
+            onChange={handleChange}
           />
 
           <label className="form-label">Description</label>
@@ -61,38 +88,42 @@ function AddBeerPage() {
             name="description"
             placeholder="Description"
             rows="3"
-            value={description}
-            onChange={handleDescription}
+            value={stateForm.description}
+            required={true}
+            onChange={handleChange}
           ></textarea>
 
           <label>Image</label>
           <input
             className="form-control mb-4"
-            type="text"
-            name="imageUrl"
+            type="url"
+            name="image_url"
             placeholder="Image URL"
-            value={imageUrl}
-            onChange={handleImageUrl}
+            value={stateForm.image_url}
+            required={true}
+            onChange={handleChange}
           />
 
           <label>First Brewed</label>
           <input
             className="form-control mb-4"
             type="text"
-            name="firstBrewed"
+            name="first_brewed"
             placeholder="Date - MM/YYYY"
-            value={firstBrewed}
-            onChange={handleFirstBrewed}
+            value={stateForm.first_brewed}
+            required={true}
+            onChange={handleChange}
           />
 
           <label>Brewer Tips</label>
           <input
             className="form-control mb-4"
             type="text"
-            name="brewersTips"
+            name="brewers_tips"
             placeholder="..."
-            value={brewersTips}
-            onChange={handleBrewersTips}
+            value={stateForm.brewers_tips}
+            required={true}
+            onChange={handleChange}
           />
 
           <label>Attenuation Level</label>
@@ -105,9 +136,10 @@ function AddBeerPage() {
             <input
               className="form-control mb-4"
               type="number"
-              name="attenuationLevel"
-              value={attenuationLevel}
-              onChange={handleAttenuationLevel}
+              name="attenuation_level"
+              value={stateForm.attenuation_level}
+              required={true}
+              onChange={handleChange}
               min={0}
               max={100}
             />
@@ -117,10 +149,11 @@ function AddBeerPage() {
           <input
             className="form-control mb-4"
             type="text"
-            name="contributedBy"
+            name="contributed_by"
             placeholder="Contributed by"
-            value={contributedBy}
-            onChange={handleContributedBy}
+            value={stateForm.contributed_by}
+            required={true}
+            onChange={handleChange}
           />
           <button className="btn btn-primary btn-round">Add Beer</button>
         </form>
