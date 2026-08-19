@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import AllBeersPage from "./pages/AllBeersPage";
@@ -8,6 +8,9 @@ import AddBeerPage from "./pages/AddBeerPage";
 import BeerDetailsPage from "./pages/BeerDetailsPage";
 
 function App() {
+const { beerId } = useParams()
+
+
   return (
     <div className="App">
     <Navbar />
