@@ -1,29 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import beersJSON from "./../assets/beers.json";
-
 
 function RandomBeersPage() {
-  // Mock initial state, to be replaced by data from the Beers API. Store the beer info retrieved from the Beers API in this state variable.
-  const [randomBeer, setRandomBeer] = useState(beersJSON[0]);
-
-  // React Router hook for navigation. We use it for the back button. You can leave this as it is.
+  const [randomBeer, setRandomBeer] = useState(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    let isMounted = true;
 
-  
-  // TASKS:
-  // 1. Set up an effect hook to make a request for a random beer from the Beers API.
-  // 2. Use axios to make a HTTP request.
-  // 3. Use the response data from the Beers API to update the state variable.
+    axios
+      .get("https://beers-api.edu.ironhack.com/beers/random")
+      .then((response) => {
+        if (isMounted) {
+          setRandomBeer(response.data.beer || response.data);
+          setError("");
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setError("Could not load a random beer. Please try again.");
+        }
+      });
 
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
-
-  // The logic and the structure for the page showing the random beer. You can leave this as it is.
   return (
     <div className="d-inline-flex flex-column justify-content-center align-items-center w-100 p-4">
       <h2>Random Beer</h2>
 
+      {error && <p role="alert">{error}</p>}
       {randomBeer && (
         <>
           <img
