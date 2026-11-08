@@ -1,4 +1,6 @@
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 function AddBeerPage() {
   // State variables to store the values of the form inputs. You can leave these as they are.
@@ -10,6 +12,28 @@ function AddBeerPage() {
   const [brewersTips, setBrewersTips] = useState("");
   const [attenuationLevel, setAttenuationLevel] = useState(0);
   const [contributedBy, setContributedBy] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newBeer = {
+      name: name,
+      tagline: tagline,
+      description: description,
+      image_url: imageUrl,
+      first_brewed: firstBrewed,
+      brewers_tips: brewersTips,
+      attenuation_level: Number(attenuationLevel),
+      contributed_by: contributedBy
+    };
+
+    axios.post("https://beers-api.edu.ironhack.com/beers/new", newBeer)
+    .then ((response) => {
+      console.log(response.data)
+      navigate ("/beers");
+    })
+  }
 
   // Handler functions for the form inputs. You can leave these as they are.
   const handleName = (e) => setName(e.target.value);
@@ -34,7 +58,7 @@ function AddBeerPage() {
   return (
     <>
       <div className="d-inline-flex flex-column w-100 p-4">
-        <form>
+        <form onSubmit = {handleSubmit}>
           <label>Name</label>
           <input
             className="form-control mb-4"
