@@ -27,7 +27,7 @@ function AllBeersPage() {
       .then((response) => {
         setBeers(response.data);
       });
-  }, [searchTerm]);
+  }, [searchTerm])
 
 
   // TASKS:
