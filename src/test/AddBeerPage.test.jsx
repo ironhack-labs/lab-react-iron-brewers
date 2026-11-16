@@ -166,9 +166,7 @@ describe("Iteration 3", () => {
       expect(requestBody.description).toBe(newBeer.description);
       expect(requestBody.first_brewed).toBe(newBeer.first_brewed);
       expect(requestBody.brewers_tips).toBe(newBeer.brewers_tips);
-      expect(requestBody.attenuation_level).toBe(
-        String(newBeer.attenuation_level)
-      );
+      expect(requestBody.attenuation_level).toBe(newBeer.attenuation_level);
       expect(requestBody.brewers_tips).toBe(newBeer.brewers_tips);
     });
   });

@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeEach, afterEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import nock from "nock";
 import axios from "axios";
@@ -81,6 +81,26 @@ describe("Iteration 1", () => {
 
       const beerLink2 = screen.getByText("Beer 2").closest("a");
       expect(beerLink2).toHaveAttribute("href", "/beers/a2");
+    });
+
+    test("searches beers by name as the user types", async () => {
+      await screen.findByText("Beer 2");
+
+      const searchScope = nock(API_URL)
+        .get("/beers/search")
+        .query({ q: "lager" })
+        .reply(200, [beers[0]]);
+
+      const searchInput = screen.getByRole("textbox", {
+        name: /search beers/i,
+      });
+      fireEvent.change(searchInput, { target: { value: "lager" } });
+
+      await waitFor(() => {
+        expect(screen.queryByText("Beer 2")).not.toBeInTheDocument();
+      });
+
+      searchScope.done();
     });
   });
 });
